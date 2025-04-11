@@ -39,33 +39,30 @@ lib/
 ## 🚀 Getting Started
 
 1. **Clone the repo**
+   This repository is a **template** – you can use it directly or you can clone it:
    ```bash
    git clone https://github.com/your-username/flutter_boilerplate.git
    ```
 
-2. **Install dependencies**
-   ```bash
-   flutter pub get
-   ```
-
-3. **Run the app**
-   ```bash
-   flutter run
-   ```
-
----
-
-## ✅ What to Do After Cloning
-
-1. **Check Your Environment**  
+2. **Check Your Environment**  
    Run the following command to ensure your Flutter setup is complete and compatible:  
    ```bash
    flutter doctor
    ```
-
-2. **Configure Environment Variables**  
-   Create and fill the `.env` file located at `lib/env/.env` with the required keys. These are required for the app to run properly and access external services:
+3. **Configure Environment Variables**  
+   Create `.env` file from file located at `lib/env/.env.example` and fill the `.env` with the required keys. These are required for the app to run properly and access external services:
 
    - `SUPABASE_*` – Supabase project credentials  
    - `SENTRY_DSN` – Sentry connection string for error tracking  
    - `POWERSYNC_*` – PowerSync-related credentials (if applicable)
+
+4. **Generate Code with build_runner**
+   Run the following command to generate necessary code for Riverpod and other code generation tools:
+   ```bash
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+5. **Run the app**
+   ```bash
+   flutter run
+   ```
