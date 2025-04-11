@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/src/core/routing/app_startup.dart';
 import 'package:flutter_boilerplate/src/core/routing/scaffold_with_nested_navigation.dart';

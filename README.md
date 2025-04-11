@@ -55,9 +55,17 @@ lib/
 
 ---
 
-## what to do after clone
+## ✅ What to Do After Cloning
 
-1. fill complete .env file with:
-   - supabase
-   - sentry
-   - powersync
+1. **Check Your Environment**  
+   Run the following command to ensure your Flutter setup is complete and compatible:  
+   ```bash
+   flutter doctor
+   ```
+
+2. **Configure Environment Variables**  
+   Create and fill the `.env` file located at `lib/env/.env` with the required keys. These are required for the app to run properly and access external services:
+
+   - `SUPABASE_*` – Supabase project credentials  
+   - `SENTRY_DSN` – Sentry connection string for error tracking  
+   - `POWERSYNC_*` – PowerSync-related credentials (if applicable)

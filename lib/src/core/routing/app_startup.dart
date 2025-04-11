@@ -50,8 +50,6 @@ class AppStartupWidget extends ConsumerWidget {
   }
 }
 
-// TODO(standa): Own UI for both widgets
-
 class AppStartupLoadingWidget extends StatelessWidget {
   const AppStartupLoadingWidget({super.key});
 

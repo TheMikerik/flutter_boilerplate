@@ -81,7 +81,6 @@ void registerErrorHandlers(ErrorLogger errorLogger) {
     return true;
   };
   // * Show some error UI when any widget in the app fails to build
-  // TODO(standa): add own error UI
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return Scaffold(
       appBar: AppBar(
