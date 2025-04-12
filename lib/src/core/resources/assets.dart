@@ -13,15 +13,8 @@ class LogoAssets {
 class SvgAssets {
   const SvgAssets._();
 
-  static const _base = BasePaths.baseSvgPath;
-  static const labPlanet = '$_base/lab_planet.svg';
-  static const planetStudying = '$_base/planet_studying.svg';
-
   static void svgPrecacheImage() {
-    const cacheSvgImages = [
-      planetStudying,
-      labPlanet,
-    ];
+    const cacheSvgImages = [];
 
     for (final element in cacheSvgImages) {
       final loader = SvgAssetLoader(element);

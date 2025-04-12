@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_boilerplate/src/core/routing/app_startup.dart';
 import 'package:flutter_boilerplate/src/core/routing/scaffold_with_nested_navigation.dart';
+import 'package:flutter_boilerplate/src/features/auth/data/auth_repository.dart';
 import 'package:flutter_boilerplate/src/features/auth/presentation/auth_screen.dart';
 import 'package:flutter_boilerplate/src/features/home/presentation/home_screen.dart';
+import 'package:flutter_boilerplate/src/features/onboarding/data/onboarding_repository.dart';
+import 'package:flutter_boilerplate/src/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:flutter_boilerplate/src/features/settings/presentation/settings_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +16,7 @@ part 'router.g.dart';
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _decksNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'decks');
+final _homeNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final _settingsNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'settings');
 
 // https://github.com/bizz84/starter_architecture_flutter_firebase/blob/master/lib/src/routing/app_router.dart
@@ -22,10 +25,9 @@ GoRouter goRouter(Ref ref) {
   // we can add some logic later thanks to ref,
   // that's why we use Riverpod for GoRouter
 
-  // TODO: Refrest router when needed
   // we can rebuild GoRouter when some state changes
-  // final authRepository = ref.watch(authRepositoryProvider);
-  // final appStartupState = ref.watch(appStartupProvider);
+  final authRepository = ref.watch(authRepositoryProvider);
+  final appStartupState = ref.watch(appStartupProvider);
 
   return GoRouter(
     observers: [
@@ -34,30 +36,39 @@ GoRouter goRouter(Ref ref) {
     initialLocation: AuthScreen.routePath,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
-    // TODO: Check if user is logged in
-
-    // redirect: (context, state) {
-    //   // If the app is still initializing, show the /startup route
-    //   if (appStartupState.isLoading || appStartupState.hasError) {
-    //     return AppStartupWidget.routePath;
-    //   }
-    //   final path = state.uri.path;
-
-    //   final isLoggedIn = authRepository.currentUser != null;
-    //   if (isLoggedIn) {
-    //     if (path.startsWith(AppStartupWidget.routePath) ||
-    //         path.startsWith(OnboardingScreen.routePath) ||
-    //         path.startsWith(AuthScreen.routePath)) {
-    //       return HomeScreen.routePath;
-    //     }
-    //   } else {
-    //     if (path != AuthScreen.routePath) {
-    //       return AuthScreen.routePath;
-    //     }
-    //   }
-    //   return null;
-    // },
-    // refreshListenable: GoRouterRefreshStream(authRepository.authStateChanges()),
+    redirect: (context, state) {
+      // If the app is still initializing, show the /startup route
+      if (appStartupState.isLoading || appStartupState.hasError) {
+        return AppStartupWidget.routePath;
+      }
+      final onboardingRepository = ref.read(onboardingRepositoryProvider);
+      final didCompleteOnboarding = onboardingRepository.isOnboardingComplete();
+      // const didCompleteOnboarding = false;
+      final path = state.uri.path;
+      if (!didCompleteOnboarding) {
+        // Always check state.subloc before returning a non-null route
+        // https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/redirection.dart#L78
+        if (path != OnboardingScreen.routePath) {
+          return OnboardingScreen.routePath;
+        }
+        // if on correct path already
+        return null;
+      }
+      //TODO: UNCOMMENT #1 (After setting up supabase)
+      // final isLoggedIn = authRepository.currentUser != null;
+      // if (isLoggedIn) {
+      //   if (path.startsWith(AppStartupWidget.routePath) ||
+      //       path.startsWith(OnboardingScreen.routePath) ||
+      //       path.startsWith(AuthScreen.routePath)) {
+      //     return HomeScreen.routePath;
+      //   }
+      // } else {
+      //   if (path != AuthScreen.routePath) {
+      //     return AuthScreen.routePath;
+      //   }
+      // }
+      return null;
+    },
     routes: [
       GoRoute(
         path: AppStartupWidget.routePath,
@@ -69,6 +80,13 @@ GoRouter goRouter(Ref ref) {
             onLoaded: (_) => const SizedBox.shrink(),
           ),
         ),
+      ),
+      GoRoute(
+        path: OnboardingScreen.routePath,
+        name: OnboardingScreen.name,
+        builder: (BuildContext context, GoRouterState state) {
+          return const OnboardingScreen();
+        },
       ),
       GoRoute(
         path: AuthScreen.routePath,
@@ -83,7 +101,7 @@ GoRouter goRouter(Ref ref) {
         ),
         branches: [
           StatefulShellBranch(
-            navigatorKey: _decksNavigatorKey,
+            navigatorKey: _homeNavigatorKey,
             routes: [
               GoRoute(
                 path: HomeScreen.routePath,

@@ -26,6 +26,8 @@ dependencies:
   flutter_svg: ^2.0.17
   internet_connection_checker_plus: ^2.7.1
   shared_preferences: ^2.5.3
+  google_sign_in: ^6.3.0
+  crypto: ^3.0.6
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +38,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/logo/

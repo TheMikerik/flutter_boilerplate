@@ -37,3 +37,30 @@ class PermissionDeniedException extends AppException {
     return 'Permission denied: $permission';
   }
 }
+
+class NoInternetException extends AppException {
+  NoInternetException() : super(null);
+
+  @override
+  String toString() {
+    return 'No internet connection.';
+  }
+}
+
+class NoAccessTokenException extends AppException {
+  NoAccessTokenException() : super(null);
+
+  @override
+  String toString() {
+    return 'Did not receive access token from Google.';
+  }
+}
+
+class NoIdTokenException extends AppException {
+  NoIdTokenException() : super(null);
+
+  @override
+  String toString() {
+    return 'Did not receive ID token from Google.';
+  }
+}
