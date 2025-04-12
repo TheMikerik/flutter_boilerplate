@@ -17,21 +17,26 @@ A clean and scalable Flutter boilerplate using [Riverpod](https://riverpod.dev) 
 
 ```
 lib/
-├── env/                   # Env files
+├── env/                         # Env files
 ├── src/
 │   ├── core/
-│   │   ├── common/        # Shared widgets & components
-│   │   ├── db/            # Database layer
-│   │   ├── error/         # Error handling
-│   │   ├── extensions/    # Extension methods
-│   │   ├── resources/     # Assets, strings, colors
-│   │   ├── routing/       # GoRouter setup
-│   │   ├── theme/         # App theming
-│   │   └── utils/         # Helper methods
-│   ├── features/          # Feature-based structure
-│   └── app.dart           # App widget
-├── main.dart              # Entry point
-└── test_screen.dart       # Sample screen for testing very specific cases
+│   │   ├── common/              # Shared widgets & components
+│   │   ├── db/                  # Database layer
+│   │   ├── error/               # Error handling
+│   │   ├── extensions/          # Extension methods
+│   │   ├── resources/           # Assets, strings, colors
+│   │   ├── routing/             # GoRouter setup
+│   │   ├── theme/               # App theming
+│   │   └── utils/               # Helper methods
+│   ├── features/                # Feature-based structure
+│   │   └── [feature]/           # Name of desired feature
+│   │       ├── service/         # Handles external services (APIs, Firebase, storage, etc.)
+│   │       ├── data/            # Implements repositories, maps data between DTOs and domain models
+│   │       ├── domain/          # Contains core business logic: entities, use cases, and repository contracts
+│   │       └── presentation/    # UI layer: screens, widgets, controllers and state management
+│   └── app.dart                 # App widget
+├── main.dart                    # Entry point
+└── test_screen.dart             # Sample screen for testing very specific cases
 ```
 
 ---
