@@ -29,7 +29,7 @@ lib/
 │   │   ├── theme/         # App theming
 │   │   └── utils/         # Helper methods
 │   ├── features/          # Feature-based structure
-│   ├── app.dart           # App widget
+│   └── app.dart           # App widget
 ├── main.dart              # Entry point
 └── test_screen.dart       # Sample screen for testing very specific cases
 ```
